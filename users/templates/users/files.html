@@ -1,0 +1,104 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+  <h1 class="mt-4">{{ title }}  
+
+
+    <div class="btn-group float-end" role="group" aria-label="Button group with nested dropdown">
+      
+  <div class="btn-group" role="group">
+
+    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      Nuovo
+    </button>
+    <ul class="dropdown-menu " aria-labelledby="btnGroupDrop1">
+      <li><a class="dropdown-item" href="/files/?idf={{ currentfolder.id }}&a=nfo">Cartella</a></li>
+      <li><a class="dropdown-item" href="/files/?idf={{ currentfolder.id }}&a=nfa">File</a></li>
+    </ul>
+  </div>
+</div></h1>    
+
+             
+   
+             
+             
+                    
+<div class="container">
+    <div class="row row-cols-auto">
+      
+
+   
+        <div class="col "> 
+        
+        
+
+<a  href="/files/ ">{{ current_enterprise.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.father.father.father.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.father.father.father.name }}</a>
+  <a  href="/files/?idf={{ currentfolder.father.father.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.father.father.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.father.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.father.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.id }}&a=o&eoo=Open  ">{{ currentfolder.name }}</a>           
+
+                     
+             
+                
+                
+  
+            
+
+        </div> </div>
+        
+
+<br>
+
+
+<table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+  <th scope="col">  </th>
+        <th scope="col">  Name</th>
+          <th scope="col"> Data e ora aggiunta</th>
+        
+
+
+
+ 
+       
+    </tr>
+  </thead>
+  <tbody>
+ {% for image in files %}
+    <tr>
+<td> <a href="/files/?idf={{ image.id }}&a=o&eoo=Edit"  >
+<i class="fa-regular fa-pen-to-square " ></i></a> </td>
+      <td>   <a  href="/files/?idf={{ image.id }}&a=o&eoo=Open"  >
+      
+      {% if  image.type == "folder" %}
+                                                 
+                                                  <i class="fa-regular fa-folder fa-xl"></i>{% else %} 
+                                                   
+                                                   <i class="fa-regular fa-file-lines fa-xl"></i>{% endif %}</a> 
+       <a style="text-decoration: none; color: black;" href="/files/?idf={{ image.id }}&a=o&eoo=Open"  >{{ image.name }}</a></td>
+             <td>   {{ image.date_time_create }} </td>
+        
+
+
+
+    
+
+      
+            
+    </tr>
+ {% endfor %} 
+  </tbody>
+</table>     
+     
+    
+</div>           
+
+
+{% endblock content %}

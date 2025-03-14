@@ -1,0 +1,38 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+
+                            <h1 class="mt-4">{{ title}}  </h1>    
+           
+                                       
+                        
+                        
+                                  <div class="row">
+                                   {% for box in headbar %}
+                                      <div class="col-xl-3 col-md-6">
+                                          <div class="card {{box.2}} text-white mb-4">
+                                              <div class="card-body  text-center"> <h5 class="mb-0">{{box.0}}</h5></div>
+                                              <div class="card-footer d-flex align-items-center justify-content-center">
+                                             <h5 class="mb-0 "> {{box.1}}</h5>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      
+                                   {% endfor %}
+                                  </div>
+                    
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                       {% include "users/included_todos.html" with current_object_type="Enterprises" current_object_id=current_enterprise.id  type_of_todo="todo"%}
+
+{% endblock content %}

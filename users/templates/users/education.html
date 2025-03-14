@@ -1,0 +1,129 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  
+                            <h1 > {{ title }} </h1>    
+                               
+                               
+                                                         <div class="row">
+                                                          {% for box in headbar %}
+                                                             <div class="col-xl-3 col-md-6">
+                                                                 <div class="card {{box.2}} text-white mb-4">
+                                                                     <div class="card-body  text-center"> <h5 class="mb-0">{{box.0}}</h5></div>
+                                                                     <div class="card-footer d-flex align-items-center justify-content-center">
+                                                                    <h5 class="mb-0 "> {{box.1}}</h5>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                             
+                                                          {% endfor %}
+                                                         </div>
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+        <table class="table table-hover table-sm " >
+
+        <thead>
+          <tr>
+
+            <th scope="col" class="text-center align-middle">Persona</th>
+             <th scope="col" class="text-center align-middle">Reparti</th>
+              <th scope="col" class="text-center align-middle"></th>
+            
+              {% for b in TodosTemplateV %}
+                 
+              <th scope="col" class="text-center align-middle">{{b.name}}</th>
+               
+              {% endfor %}    
+          </tr>
+        </thead>
+        <tbody>
+        {% for people in enterprises_peopleV %}
+        {% if 1 == 1 %}
+          <tr>
+
+            <th scope="row"><a  target="_blank" href="/enterprises_people_dett/?idpeo={{people.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{people.name}}  {{people.surname}} 
+            
+
+ 
+
+    
+        
+          
+            
+            
+      </th>
+                 <td scope="row"> {{people.org_chart}} 
+           </td>
+
+           <td>  
+         
+            
+
+  
+            
+            
+            </td>
+              {% for b in TodosTemplateV %}
+             
+              <td><a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              
+            
+              
+         {% for a in people.todos_enterprisepeopleobj_set.all %}
+         
+         
+                   {% if  a.todo_template.name == b.name  %}
+      
+
+<div class="card  text-center">
+  <div class="card-body">
+ {% if  a.type == "requirement"  %}
+
+       <a href="/todos_dett/?idt={{a.id}}&tod=requirement" data-toggle="tooltip" title="{{a.name}}"><i class="fas fa-stamp"></i></a>
+
+   
+   {% endif  %} 
+   
+    {% if  a.type == "todo"  %}
+
+          <a href="/todos_dett/?idt={{a.id}}&tod=todo" data-toggle="tooltip" title="{{a.name}}"><i class="fa-solid fa-person-chalkboard"></i></a>
+
+      
+      {% endif  %} 
+   
+   
+   
+   <b>{{a.name}}</b><br>
+   {{a.expire}}  {{a.state}}
+  </div>
+</div>
+
+<br>
+
+          {% endif  %}
+        
+         {% endfor %}
+             
+              
+             
+              
+              
+              </a></th>
+              {% endfor %} 
+          </tr>
+            {% endif  %}
+          {% endfor %}
+        </tbody>
+      </table>           
+{% endblock content %}

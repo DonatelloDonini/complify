@@ -1,0 +1,39 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="container">
+ <h1 class="mt-4">About</h1>
+    <div class="row">
+   
+        <div class="col-md-8">
+           
+            <p>
+                <h2 class="mt-4">
+                    <img src="{% static 'images/fi/favicon-32x32.png' %}" alt="Comply Logo">
+                    &nbsp;Comply
+                </h2>
+         
+            
+            
+   Comply (si legge Complai) è una piattaforma di gestione della compliance aziendale che mira a semplificare il processo di conformità normativa. <br> 
+   L'obiettivo principale di Comply è quello di liberare il personale aziendale dalle complesse gestione dlla compliance.         
+Con Comply si risparmia tempo ed energie che possono essere reinvestite nelle attività principali dell'azienda. 
+            
+            </p>
+            
+            Copyright Itineris 2023 - comply version 2.1
+        </div>
+     
+       
+        <div class="col-md-4">
+            <img src="{% static 'images/itineris_logo.png' %}" alt="Itineris Logo" class="img-fluid">
+            <div ><br>www.itineris.uno <br> info@itineris.uno</div>
+        </div>
+    </div>
+</div>
+
+          
+    
+{% endblock content %}

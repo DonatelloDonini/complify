@@ -1,0 +1,373 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+ 
+
+
+
+          <h1 > <a href="/actions_list/?idcat={{  actions_dett.type_of_actions.id}}"><i class="fa-solid fa-angles-left"></i></a>  {{  actions_dett.type_of_actions}} di {{  current_enterprise.name  }} </h1>    
+             
+
+
+                   
+   <div class="container mt-5">
+     <h3 > Codice: {{  actions_dett.type_of_actions}}/{{  actions_dett.prot  }}</h3>
+     
+     Azioni collegate:
+     
+     
+     
+           <div class="row justify-content-center">
+               
+
+   {% csrf_token %}   
+   {% crispy F_actions_crud   %}   
+      
+
+  
+</div></div>
+
+
+
+    
+    
+    
+ <br><br>
+ 
+   <div class="container mt-5">
+ 
+  
+  <div class="card">
+  
+    <div class="card-header">
+       <h3 >Azioni generate </h3> 
+    </div>
+  <div class="card-body">
+ 
+
+  
+          <div class="row">
+          
+               <div class="col-xl-6">
+
+  
+  
+
+ {% for TypeOfAction in TypeOfActions %}   
+     
+{{ TypeOfAction.name }}<br>
+<form id="curr_ent3" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 w-100" action="/actionsitemsstandards_dett/" method="POST">
+           {% csrf_token %}
+            <div class="input-group">
+                         <input type="hidden" value={{ actions_dett.id }} name="current_action_id" />     
+                                   <select name="standardid" id="standardid" class="form-select "   >
+      {% for actions_dett in TypeOfAction.actions_set.all %}
+      
+
+                  
+                  
+                   {% for enterprise_itemstandard in itemstandard.enterprisesstandardsitems_set.all %}
+                   
+
+
+                   {% for enterprise_itemstandard_t_o_a in enterprise_itemstandard.tofaenterprisesitemsstandards_set.all|dictsort:"type_of_actions.id" %}
+                   
+
+                                                      {% ifchanged enterprise_itemstandard_t_o_a.type_of_actions.name %}
+
+                                                                                {% if enterprise_itemstandard_t_o_a.type_of_actions.id ==  actions_dett.type_of_actions.id %}
+                                                                                      <option value="{{ itemstandard.id }}">{{ itemstandard.name }}</option>
+                                                                                        {% endif %}
+                                                
+                                                
+                                                
+                                                      {% endifchanged %}
+                                                 
+
+
+                   {% endfor %}  
+
+                   {% endfor %}   
+                  
+                  
+                  
+
+
+      {% endfor %}   
+                 </select>  
+                             
+                   <button class="btn btn-primary float-end" type="submit" name="azione" value="Add"   ><i class="fa-solid fa-plus"></i></button>                </div>
+         </form>
+         <p></p>
+  {% endfor %} 
+ 
+ 
+                   
+               </div>
+               
+               <div class="col-xl-6">
+               
+  
+  <table class="table table-hover table-sm " >
+
+   <thead>
+     <tr>
+
+         <th scope="col">  Norma</th>
+  <th scope="col"> Punto </th>
+
+
+      <th scope="col">  </th>
+        
+     </tr>
+   </thead>
+   <tbody>
+   
+   
+   
+
+    {% for aa in ActionsItemsStandardsV %}
+     <tr>
+
+   <form  action="/actionsitemsstandards_dett/" method="POST">
+    <td >  {{aa.items_standards.standards}}</td>
+     <td > {{aa.items_standards}} </td>
+ {% csrf_token %}
+
+    <td >  <button class="btn btn-sm btn-primary float-end" type="submit" name="azione" value="Delete"   ><i class="fa-regular fa-square-minus"></i></button>  </i></a></td>
+      <input type="hidden" value={{ actions_dett.id }} name="current_action_id" /> 
+      <input type="hidden" value={{ aa.id }} name="current_action_items_id" /> 
+ </form>
+       
+             
+     </tr>
+  {% endfor %} 
+ 
+   </tbody>
+ </table>
+ 
+     
+    </div>
+</div>   </div>
+</div>
+ <br><br>   
+    
+    <br><br>
+     
+     
+ 
+ 
+ 
+ -------------------
+  
+ 
+  <div class="card">
+  
+    <div class="card-header">
+       <h3 >Punti norma coinvolti </h3> 
+    </div>
+  <div class="card-body">
+ 
+
+  
+          <div class="row">
+          
+               <div class="col-xl-6">
+
+  
+  
+
+ {% for Standard in Standards %}   
+     
+{{ Standard.name }}<br>
+<form id="curr_ent3" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 w-100" action="/actionsitemsstandards_dett/" method="POST">
+           {% csrf_token %}
+            <div class="input-group">
+                         <input type="hidden" value={{ actions_dett.id }} name="current_action_id" />     
+                                   <select name="standardid" id="standardid" class="form-select "   >
+      {% for itemstandard in Standard.itemsstandards_set.all %}
+      
+
+                  
+                  
+                   {% for enterprise_itemstandard in itemstandard.enterprisesstandardsitems_set.all %}
+                   
+
+
+                   {% for enterprise_itemstandard_t_o_a in enterprise_itemstandard.tofaenterprisesitemsstandards_set.all|dictsort:"type_of_actions.id" %}
+                   
+
+                                                      {% ifchanged enterprise_itemstandard_t_o_a.type_of_actions.name %}
+
+                                                                                {% if enterprise_itemstandard_t_o_a.type_of_actions.id ==  actions_dett.type_of_actions.id %}
+                                                                                      <option value="{{ itemstandard.id }}">{{ itemstandard.name }}</option>
+                                                                                        {% endif %}
+                                                
+                                                
+                                                
+                                                      {% endifchanged %}
+                                                 
+
+
+                   {% endfor %}  
+
+                   {% endfor %}   
+                  
+                  
+                  
+
+
+      {% endfor %}   
+                 </select>  
+                             
+                   <button class="btn btn-primary float-end" type="submit" name="azione" value="Add"   ><i class="fa-solid fa-plus"></i></button>                </div>
+         </form>
+         <p></p>
+  {% endfor %} 
+ 
+ 
+                   
+               </div>
+               
+               <div class="col-xl-6">
+               
+  
+  <table class="table table-hover table-sm " >
+
+   <thead>
+     <tr>
+
+         <th scope="col">  Norma</th>
+  <th scope="col"> Punto </th>
+
+
+      <th scope="col">  </th>
+        
+     </tr>
+   </thead>
+   <tbody>
+   
+   
+   
+
+    {% for aa in ActionsItemsStandardsV %}
+     <tr>
+
+   <form  action="/actionsitemsstandards_dett/" method="POST">
+    <td >  {{aa.items_standards.standards}}</td>
+     <td > {{aa.items_standards}} </td>
+ {% csrf_token %}
+
+    <td >  <button class="btn btn-sm btn-primary float-end" type="submit" name="azione" value="Delete"   ><i class="fa-regular fa-square-minus"></i></button>  </i></a></td>
+      <input type="hidden" value={{ actions_dett.id }} name="current_action_id" /> 
+      <input type="hidden" value={{ aa.id }} name="current_action_items_id" /> 
+ </form>
+       
+             
+     </tr>
+  {% endfor %} 
+ 
+   </tbody>
+ </table>
+ 
+     
+    </div>
+</div>   </div>
+</div>
+ <br><br>   
+    
+    <br><br>
+     
+     
+ 
+     
+     <div class="card">
+     
+       <div class="card-header">
+          <h3 >Asset coinvolti</h3> 
+       </div>
+     <div class="card-body">
+     
+     <div class="row">
+               <div class="col-xl-6">
+                   
+        
+     
+     
+     
+      <form id="curr_ent1" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 w-100" action="/actionsassets_dett/" method="POST">
+                {% csrf_token %}
+                 <div class="input-group">
+                              <input type="hidden" value={{ actions_dett.id }} name="current_action_id" />    
+                                        <select name="current_assetid" id="current_assetid" class="form-select  " >
+            {% for a in assetsV %}
+            
+
+                         <option value="{{ a.id }}">{{ a.type }}->{{ a.name }}</option>
+      
+
+            {% endfor %}   
+                     </select>  
+                                 
+                       <button class="btn btn-primary float-end" type="submit" name="azione" value="Add"   ><i class="fa-solid fa-plus"></i></button>                </div>
+             </form>
+             
+             
+             
+                    </div>
+                    
+                    <div class="col-xl-6">
+           
+     <table class="table table-hover table-sm " >
+
+      <thead>
+        <tr>
+
+            <th scope="col">  Name</th>
+
+
+
+         <th scope="col">  </th>
+           
+        </tr>
+      </thead>
+      <tbody>
+       {% for aa in ActionsAssetsV %}
+        <tr>
+
+      <form  class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"   action="/actionsassets_dett/" method="POST">
+    {% csrf_token %}
+        <td >
+                       <input type="hidden" value={{ actions_dett.id }} name="current_action_id" /> 
+                       <input type="hidden"  value= {{ aa.id }} name="current_asset_items_id" />  {{aa.assets}} </td>
+
+
+       <td >  <button class="btn btn-sm btn-primary float-end" type="submit" name="azione" value="Delete"   ><i class="fa-regular fa-square-minus"></i></button>  </i></a></td>
+
+    </form>
+          
+                
+        </tr>
+     {% endfor %} 
+      </tbody>
+    </table>
+    
+                 
+             </div>
+         </div></div>
+         </div>
+    <br>
+
+ 
+
+
+</div>
+ 
+{% endblock content %}
+ 
+
+

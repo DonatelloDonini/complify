@@ -1,0 +1,114 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  
+                            <h1 > {{ title }} </h1>    
+                               
+                               
+                                                               <div class="row">
+                                                                {% for box in headbar %}
+                                                                   <div class="col-xl-3 col-md-6">
+                                                                       <div class="card {{box.2}} text-white mb-4">
+                                                                           <div class="card-body  text-center"> <h5 class="mb-0">{{box.0}}</h5></div>
+                                                                           <div class="card-footer d-flex align-items-center justify-content-center">
+                                                                          <h5 class="mb-0 "> {{box.1}}</h5>
+                                                                           </div>
+                                                                       </div>
+                                                                   </div>
+                                                                   
+                                                                {% endfor %}
+                                                               </div>
+                                                         
+
+
+
+
+{% if filterT.form %}
+                <div class="card card-body filter-bar">
+
+                  <form method="get">
+
+                  <div class="row">
+{% for field in filterT.form %}
+                    <div class="col">
+                        <label for="id_title__icontains">{{ field.label }}</label><br>
+
+                        {{ field }}
+                    </div>
+
+              
+    {% endfor %}             
+
+
+                      <div class="col-sm-1 form-group is-valid" style="padding-left:">
+
+                        <button class="btn btn-warning btn-md search_btn search_btn filter-btn"  type="submit">Filtra</button>
+                      </div>
+
+
+                    </div>
+                  </form>
+                </div>
+                 <br>
+{% endif %}
+
+
+
+  <form method="post" class="form-inline" action="/requests_dett/">       
+      {% csrf_token %}
+      <input type="hidden" value="Rmail" name="action" />   
+  <button class="btn btn-outline-success" type="submit">Scarica mail</button>
+</form>
+  <a class="btn btn-primary float-end" role="button" href="/requests_dett/?action=New">Aggiungi</a>
+
+                    
+                               
+    <table class="table table-hover table-sm " >
+
+    <thead>
+      <tr>
+ <th > </th>
+      <th > Nome</th>
+        <th > Azienda</th>
+<th > Richiedente </th>
+<th > Data e ora richiesta </th>
+<th > Categoria </th>
+  <th > Azione </th>
+  <th > Stato</th> 
+    <th > In carico a </th> 
+      
+         
+      </tr>
+    </thead>
+    <tbody>
+     {% for c in RequestsV %}
+      
+      <tr>
+
+   
+
+        <td><a  href="/requests_dett/?action=Edit&id={{c.id}} "><i class="fa-regular fa-pen-to-square " ></i></a>  </td>
+      <td > {{c.name}} </td>
+        <td > {{c.enterprise}} </td>
+<td > {{c.whoami}} </td>
+<td > {{c.date_time_open}} </td>
+<td > {{c.request_category.name}} </td>
+  <td > {{c.actions.name}} </td>
+  <td > {{c.state}} </td> 
+    <td > {{c.in_charge}} </td> 
+
+
+  
+              
+      </tr>
+      
+   {% endfor %} 
+    </tbody>
+  </table>  
+      
+      
+      
+      
+{% endblock content %}

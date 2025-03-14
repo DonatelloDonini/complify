@@ -1,0 +1,66 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+                            <h1 > {{ title }} </h1>    
+                               
+        <table class="table table-hover table-sm " >
+
+        <thead>
+          <tr>
+
+            <th scope="col"></th>
+              <th scope="col"></th>
+            
+              {% for b in orgchart_dett %}
+              <th scope="col">{{b.name}}</th>
+              {% endfor %}    
+          </tr>
+        </thead>
+        <tbody>
+        {% for toa in TypeOfActions %}
+        {% if toa.type == "documentation" %}
+          <tr>
+
+            <th scope="row">{{toa.name}} 
+      </th>
+           <td>  
+         
+            
+     
+            
+            
+            </td>
+              {% for b in orgchart_dett %}
+              <td><a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              
+            
+              
+         {% for a in toa.actions_set.all %}
+
+           {% if  a.org_chart_item.orgcharts.id == b.id  %}
+           <a target="_blank" href="/actions_dett/?idac={{a.id}}">{{a.name}}</a> <br>
+
+          {% endif  %}
+        
+         {% endfor %}
+             
+              
+              
+              
+              
+              
+              
+              </a></th>
+              {% endfor %} 
+          </tr>
+            {% endif  %}
+          {% endfor %}
+        </tbody>
+      </table>         
+    
+{% endblock content %}

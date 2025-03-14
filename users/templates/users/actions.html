@@ -1,0 +1,75 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+                            <h1 class="mt-4">{{ current_actions_type.name }}  <a class="btn btn-primary float-end" href="/actions_dett/?idcat={{ current_actions_type.id }}" role="button"><i class="fa-solid fa-plus"></i></a></h1>    
+           
+                                       
+                        
+                        
+                                             <div class="row">
+                                              {% for box in headbar %}
+                                                 <div class="col-xl-3 col-md-6">
+                                                     <div class="card {{box.2}} text-white mb-4">
+                                                         <div class="card-body  text-center"> <h5 class="mb-0">{{box.0}}</h5></div>
+                                                         <div class="card-footer d-flex align-items-center justify-content-center">
+                                                        <h5 class="mb-0 "> {{box.1}}</h5>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                                 
+                                              {% endfor %}
+                                             </div>
+                        
+                        
+
+                        
+                        <div class="table-responsive">
+                        
+  <table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+
+  <th scope="col">  Codice</th>
+        <th scope="col">  Name</th>
+      <th scope="col"> Organigramma</th>
+       <th scope="col">  Data</th>
+     <th scope="col"> Scadenza</th>
+
+   
+       
+    </tr>
+  </thead>
+  <tbody>
+   {% for aa in current_Actions %}
+    <tr>
+   <td >  <a  href="/actions_dett/?idac={{aa.id}} ">{{aa.type_of_actions.name}}/{{aa.prot}}</a></td>
+
+      <td> {{aa.name}} </td>
+    <td > {{aa.org_chart_item.orgcharts.name}}->{{aa.org_chart_item.name}} </td>
+   <td> {{aa.date_actions}} </td>
+ <td > {{aa.date_expire_actions}} </td>
+
+
+    
+
+      
+            
+    </tr>
+ {% endfor %} 
+  </tbody>
+</table>
+
+  </div>
+
+
+    
+    
+     
+    
+{% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+          <h1 class="mt-4">  {{ title }}  </h1>    
+             
+
+
+
+
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+            
+      {%  crispy F_enterprises_dett_crud   %}
+
+            
+                  
+            </div>
+        </div>
+    </div>
+
+ 
+ {% endblock content %}

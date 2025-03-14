@@ -1,0 +1,107 @@
+{% load crispy_forms_tags %}
+
+
+
+
+
+{% if filterT.form %}
+                <div class="card card-body filter-bar">
+
+                  <form method="get">
+
+                  <div class="row">
+{% for field in filterT.form %}
+                    <div class="col">
+                        <label for="id_title__icontains">{{ field.label }}</label><br>
+
+                        {{ field }}
+                    </div>
+
+              
+    {% endfor %}             
+
+
+                      <div class="col-sm-1 form-group is-valid" style="padding-left:">
+
+                        <button class="btn btn-warning btn-md search_btn search_btn filter-btn"  type="submit">Filtra</button>
+                      </div>
+
+
+                    </div>
+                  </form>
+                </div>
+                 <br><br>
+{% endif %}
+
+
+
+
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle float-end" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    Aggiungi
+  </button>
+  
+  <!-- Lista Opzioni -->
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  {% for template in TodosTemplateV %}
+    <li><a class="dropdown-item"  href="/todos_dett/?temp={{ template.id }}&tod={{ type_of_todo }}&ido={{ current_object_id }}&t={{ current_object_type}}"> {{ template.name }} </a>
+</li>
+
+      {% endfor %} 
+  </ul>
+</div>
+  
+
+ <br><br>
+ <table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+  <th scope="col">  </th>
+        <th scope="col">  Name</th>
+          <th scope="col"> Azienda</th>
+             <th scope="col"> Tipo</th>
+             <th scope="col"> Riferimento</th>
+      <th scope="col"> Scadenza</th>
+       <th scope="col"> Stato</th>
+      <th scope="col"> Assegnato</th>
+
+
+ 
+       
+    </tr>
+  </thead>
+  <tbody>
+   {% for aa in TodosV %}
+    <tr>
+<td> <a  href="/todos_dett/?idt={{aa.id}}&tod={{ type_of_todo }}&ido={{ current_object_id }}&t={{ current_object_type}} "><i class="fa-regular fa-pen-to-square " ></i></a> </td>
+      <td>   {{aa.name}} </td>
+             <td>   {{aa.enterprises}} {% if aa.standards is not None %} {{aa.standards}} {% endif %}
+             {% if aa.items_standards is not None %} {{aa.items_standards}} {% endif %}
+             </td>
+                 <td > {{aa.todo_template}} </td>
+                  <td>
+    {% if aa.enterprisepeopleobj is not none %}
+        {{ aa.enterprisepeopleobj }}
+    {% endif %}
+    {% if aa.items_standards is not none %}
+        {{ aa.items_standards.standards }} - {{ aa.items_standards }}
+    {% endif %}
+    {% if aa.standards is not none %}
+        {{ aa.standards }}
+    {% endif %}
+</td>
+    <td > {{aa.expire}} </td>
+      <td > {{aa.state}} </td>
+  <td > {{aa.enterprises_people}} </td>
+
+
+    
+
+      
+            
+    </tr>
+ {% endfor %} 
+  </tbody>
+</table>
+<br><br>

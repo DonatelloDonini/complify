@@ -1,0 +1,160 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+                            <h1 class="mt-4">{{ title }} </h1>    
+                               
+                  <p>
+                        
+                                         <div class="row">
+                                          {% for box in headbar %}
+                                             <div class="col-xl-3 col-md-6">
+                                                 <div class="card {{box.2}} text-white mb-4">
+                                                     <div class="card-body  text-center"> <h5 class="mb-0">{{box.0}}</h5></div>
+                                                     <div class="card-footer d-flex align-items-center justify-content-center">
+                                                    <h5 class="mb-0 "> {{box.1}}</h5>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             
+                                          {% endfor %}
+                                         </div>
+                        
+                        
+                        
+                        <div class="table-responsive">
+  <table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+
+      <th scope="col" class="text-center align-middle">Asset</th>
+          <th scope="col" class="text-center align-middle">Tipo</th>
+        <th scope="col" class="text-center align-middle"></th>
+      
+        {% for b in TypeOfActions %}
+        <th scope="col" class="text-center align-middle">{{b.name}}</th>
+        {% endfor %}    
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in AssetsV %}
+  
+    <tr>
+      <th scope="row"> <a  target="_blank" href="/assets_dett/?ida={{item.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{item.name}}
+      
+      
+      
+      <div >
+         {% for todo in item.todos_set.all %}
+
+        
+          {% if  todo.type == "requirement"  %}
+              {% if  todo.state_requirement == "OPEN"  %}
+       
+
+            <a href="/todos_dett/?idt={{todo.id}}&tod=requirement" class="btn btn-sm btn-danger" data-toggle="tooltip" title="{{todo.name}}"><i class="fas fa-stamp"></i></a>
+
+            
+            
+          
+         {% else  %}
+         <a href="/todos_dett/?idt={{todo.id}}&tod=requirement" class="btn btn-sm btn-success" data-toggle="tooltip" title="{{todo.name}}"><i class="fas fa-stamp"></i></a>
+         {% endif  %}
+         {% endif  %}
+          {% if forloop.counter|divisibleby:10 %}  
+          </div><div class="clearfix"></div> 
+        {% endif %}
+         {% endfor %}
+           </div>        
+              
+      <div >
+         {% for todo in item.todos_set.all %}
+
+           {% if  todo.type == "todo"  %}
+          <a href="/todos_dett/?idt={{todo.id}}&tod=todo" class="btn btn-sm btn-danger" data-toggle="tooltip" title="{{todo.name}}"><i class="fas fa-clock"></i></a>
+          {% endif  %}
+              {% if forloop.counter|divisibleby:10 %}  
+              </div><div class="clearfix"></div> 
+            {% endif %}
+         {% endfor %}
+           </div>               
+                  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <br>
+</th>
+      <td>{{item.type}} 
+</td>
+     <td>  
+   
+      
+<div class="dropdown">
+    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        +
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        
+        {% for a in TypeOfActions %}
+        <li><a href="/actions_dett/?idcat={{a.id}}" class="dropdown-item" target="_blank"> {{a.name}}</a></li>
+        {% endfor %}  
+ </ul>
+</div>
+      
+      
+      </td>
+        {% for b in TypeOfActions %}
+        <td><a class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        
+      
+        
+   {% for action in item.actionsassets_set.all %}
+     {% if  action.actions.type_of_actions.name == b.name  %}
+     <a target="_blank" href="/actions_dett/?idac={{action.actions.id}}">{{action.actions.name}}</a> <br>
+
+    {% endif  %}
+    
+   {% endfor %}
+       
+        
+        
+        
+        
+        
+        
+        </a></th>
+        {% endfor %} 
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+
+
+                        
+   
+    
+
+ 
+    
+    
+{% endblock content %}

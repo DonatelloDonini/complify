@@ -1,0 +1,107 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+  <h1 class="mt-4">{{ title }}  {{ edit_or_open }} 
+
+
+    <div class="btn-group float-end" role="group" aria-label="Button group with nested dropdown">
+      
+  <div class="btn-group" role="group">
+
+    <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      Nuovo
+    </button>
+    <ul class="dropdown-menu " aria-labelledby="btnGroupDrop1">
+      <li><a class="dropdown-item" href="/files/?idf={{ currentfolder.id }}&a=nfo">Cartella</a></li>
+      <li><a class="dropdown-item" href="/files/?idf={{ currentfolder.id }}&a=nfa">File</a></li>
+    </ul>
+  </div>
+</div></h1>    
+
+             
+   
+             
+             
+                    
+<div class="container">
+    <div class="row row-cols-auto">
+      
+
+   
+        <div class="col "> 
+        
+        
+          {% if  edit_or_open == "Open" %}
+                             
+         <a  href="/files/?idf={{ currentfolder.id }}&a=cm&eoo=Edit "><i class="fa-regular fa-pen-to-square " ></i></a>
+                {% else %}          
+           <a  href="/files/?idf={{ currentfolder.id }}&a=cm&eoo=Open "><i class="fa-regular fa-pen-to-square " ></i></a>
+                        
+            {% endif %} 
+<a  href="/files/ ">{{ current_enterprise.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.father.father.father.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.father.father.father.name }}</a>
+  <a  href="/files/?idf={{ currentfolder.father.father.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.father.father.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.father.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.father.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.father.id }}&a=o&eoo=Open ">{{ currentfolder.father.name }}</a>
+ <a  href="/files/?idf={{ currentfolder.id }}&a=o&eoo=Open  ">{{ currentfolder.name }}</a>           
+
+                     
+             
+                
+                
+  
+            
+
+        </div> </div>
+        
+
+
+</div>           
+<p></p>
+
+
+<div class="container">
+  <div class="row row-cols-auto"> 
+ {% for image in files %}
+            <div class="col mb-4">
+                 <div class="d-flex justify-content ">
+                  {% if  edit_or_open == "Open" %}
+                                 {% if  image.type == "folder" %}
+                                                  <a href="/files/?idf={{ image.id }}&a=o&eoo={{ edit_or_open }}"  class="btn btn-outline-dark">
+                                                  <i class="fa-regular fa-folder fa-2xl"></i>
+                           {% else %} 
+                                                   <a href="/files/?idf={{ image.id }}&a=o&eoo={{ edit_or_open }}" class="btn btn-outline-dark">
+                                                   <i class="fa-regular fa-file fa-2xl"></i><br>
+                          {% endif %} 
+                          
+             {% else %} 
+                                           {% if  image.type == "folder" %}
+                                                            <a href="/files/?idf={{ image.id }}&a=o&eoo={{ edit_or_open }}"  class="btn btn-outline-dark">
+                                                            <i class="fa-regular fa-folder fa-2xl"></i>
+                                     {% else %} 
+                                                             <a href="/files/?idf={{ image.id }}&a=o&eoo={{ edit_or_open }}" class="btn btn-outline-dark">
+                                                             <i class="fa-regular fa-file fa-2xl"></i><br>
+                                    {% endif %} 
+                                    
+                                                   
+                            {% endif %} 
+
+                        {{ image.name }}
+                     </a>
+          
+                
+                
+</div></div>
+            {% endfor %}
+  </div>
+</div>
+
+     
+     
+     
+     
+    
+{% endblock content %}

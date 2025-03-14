@@ -1,0 +1,306 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  
+                            <h1 > {{ title }} </h1>    
+                               
+                               
+                                                         <div class="row">
+                                                          {% for box in headbar %}
+                                                             <div class="col-xl-3 col-md-6">
+                                                                 <div class="card {{box.2}} text-white mb-4">
+                                                                     <div class="card-body  text-center"> <h5 class="mb-0">{{box.0}}</h5></div>
+                                                                     <div class="card-footer d-flex align-items-center justify-content-center">
+                                                                    <h5 class="mb-0 "> {{box.1}}</h5>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                             
+                                                          {% endfor %}
+                                                         </div>
+                               
+                               
+                               
+                               
+  <div class="table-responsive">
+  <table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+
+      <th scope="col" class="text-center align-middle"></th>
+        <th scope="col"></th>
+              <th scope="col" class="text-center align-middle">Senza scadenza</th>
+             <th scope="col" class="text-center align-middle">Scaduti</th>
+        {% for b in month_plan %}
+        <th scope="col" class="text-center align-middle">{{b.0}}<br>{{b.2}}</th>
+        {% endfor %}    
+        <th scope="col" class="text-center align-middle">Oltre </th>
+    </tr>
+  </thead>
+  
+  
+  <tbody>
+  {% for item in Enterprises %}
+    <tr>
+
+      <th scope="row"> {{item.name}} </th>
+     <td>  
+   
+      
+
+      
+      
+      </td>
+       <td>
+       
+         {% for b in item.todos_set.all %}
+       
+         
+     
+
+         
+
+     
+               {% if b.expire is None   %}
+             
+               
+               
+     
+<div class="card border-primary mb-3" style="max-width: 18rem;">
+
+<div class="card-header text-center" style="background-color: yellow;"> <a  href="/todos_dett/?idt={{b.id}}&tod={{b.type}}&ido=00c1839f-05df-4901-88a6-37d5db361326&t=Enterprises"><i class="fa-regular fa-pen-to-square " ></i></a> {{b.name}}</div>
+
+
+
+  <div class="card-body text-primary">
+    <h6 class="card-title text-center">
+ {{b.expire}}<br>
+ {{b.enterprises_people}} <br>
+                   </h6>
+                      
+                      <p class="card-text">   {% if b.enterprisepeopleobj is not none %}
+                             {{ b.enterprisepeopleobj }}
+                         {% endif %}
+                         {% if b.items_standards is not none %}
+                              {{ b.items_standards.standards }} - {{ b.items_standards }}
+                         {% endif %}
+                         {% if b.standards is not none %}
+                             {{ b.standards }}
+                         {% endif %}</p>
+  </div>
+</div>
+
+            
+               {% endif  %}
+
+
+    
+               
+    
+     
+    {% endfor %}
+         
+    
+         
+       
+       
+       
+       
+        </td>
+      <td>
+     
+      {% for b in item.todos_set.all %}
+    
+      
+  
+  
+            {% if b.expire < current_date   %}
+          
+            
+        
+<div class="card border-primary mb-3" style="max-width: 18rem;">
+
+<div class="card-header text-center " style="background-color: red;"> <a  href="/todos_dett/?idt={{b.id}}&tod={{b.type}}&ido=00c1839f-05df-4901-88a6-37d5db361326&t=Enterprises"><i class="fa-regular fa-pen-to-square " ></i></a> {{b.name}}</div>
+
+
+
+  <div class="card-body text-primary">
+    <h6 class="card-title text-center">
+ {{b.expire}}<br>
+ {{b.enterprises_people}} <br>
+                   </h6>
+                      
+                      <p class="card-text">   {% if b.enterprisepeopleobj is not none %}
+                             {{ b.enterprisepeopleobj }}
+                         {% endif %}
+                         {% if b.items_standards is not none %}
+                              {{ b.items_standards.standards }} - {{ b.items_standards }}
+                         {% endif %}
+                         {% if b.standards is not none %}
+                             {{ b.standards }}
+                         {% endif %}</p>
+  </div>
+</div>
+         
+            {% endif  %}
+
+
+ 
+            
+ 
+  
+ {% endfor %}
+      
+ 
+      
+      
+      
+    
+     </td>
+      
+      
+       {% for c in month_plan %}
+   
+         <td>
+       
+        {% for b in item.todos_set.all %}
+      
+        
+    
+
+        
+  
+     {% if  b.expire_year == c.2  %}
+     {% if  b.expire_month == c.1  %}
+     
+       
+<div class="card border-primary mb-3" style="max-width: 18rem;">
+
+<div class="card-header text-center " > <a  href="/todos_dett/?idt={{b.id}}&tod={{b.type}}&ido=00c1839f-05df-4901-88a6-37d5db361326&t=Enterprises"><i class="fa-regular fa-pen-to-square " ></i></a> {{b.name}}</div>
+
+
+
+  <div class="card-body text-primary">
+    <h6 class="card-title text-center " >
+ {{b.expire}}<br>
+ {{b.enterprises_people}} <br>
+                   </h6>
+                      
+                      <p class="card-text">   {% if b.enterprisepeopleobj is not none %}
+                             {{ b.enterprisepeopleobj }}
+                         {% endif %}
+                         {% if b.items_standards is not none %}
+                              {{ b.items_standards.standards }} - {{ b.items_standards }}
+                         {% endif %}
+                         {% if b.standards is not none %}
+                             {{ b.standards }}
+                         {% endif %}</p>
+  </div>
+</div>
+
+    {% endif  %}
+     {% endif  %}
+
+    
+   {% endfor %}
+        
+   
+        
+        
+        
+      </td>
+      
+      
+      
+      
+      
+      
+        {% endfor %} 
+ 
+ 
+          <td>
+        
+         {% for b in item.todos_set.all %}
+       
+         
+     
+
+         
+   
+     
+               {% if  b.expire > last_date  %}
+             
+                    
+<div class="card border-primary mb-3" style="max-width: 18rem;">
+
+<div class="card-header text-center" style="background-color: orange;"> <a  href="/todos_dett/?idt={{b.id}}&tod={{b.type}}&ido=00c1839f-05df-4901-88a6-37d5db361326&t=Enterprises"><i class="fa-regular fa-pen-to-square " ></i></a> {{b.name}}</div>
+
+
+
+  <div class="card-body text-primary">
+    <h6 class="card-title text-center">
+ {{b.expire}}<br>
+ {{b.enterprises_people}} <br>
+                   </h6>
+                      
+                      <p class="card-text">   {% if b.enterprisepeopleobj is not none %}
+                             {{ b.enterprisepeopleobj }}
+                         {% endif %}
+                         {% if b.items_standards is not none %}
+                              {{ b.items_standards.standards }} - {{ b.items_standards }}
+                         {% endif %}
+                         {% if b.standards is not none %}
+                             {{ b.standards }}
+                         {% endif %}</p>
+  </div>
+</div>
+            
+               {% endif  %}
+
+
+    
+               
+    
+     
+    {% endfor %}
+         
+    
+         
+         
+         
+       </td>
+       
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+    
+         
+         
+         
+         
+         
+         
+         
+{% endblock content %}

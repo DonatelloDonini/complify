@@ -1,0 +1,269 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+ 
+
+
+                       
+                        
+                            
+                        <div class="row">
+
+                               
+                                <h1 class="mt-4">Anagrafiche base </h1>   
+                     
+                           
+                             <div class="row">
+                                 <div class="col-xl-6">
+                                     <div class="card mb-4">
+                                         <div class="card-header">
+                                             <i class="fas fa-building"></i>
+                                             Aziende
+                                              <a class="btn btn-primary float-end" href="/enterprises_dett/" data-bs-target="#enterprises"><i class="fa-solid fa-plus"></i></a>
+                                         </div>
+                                    <table class="table table-hover table-sm " >
+
+                                    <thead>
+                                      <tr>
+
+                                          <th scope="col">  Name</th>
+                                        <th scope="col"> </th>
+                              
+
+                                         
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                     {% for a in Enterprises %}
+                                      <tr>
+
+                                        <td  > <a  href="/enterprises_dett/?iden={{a.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{a.name}}</td>
+                                      <td >  </td>
+                             
+
+                                      
+                                        
+                                        
+                                              
+                                      </tr>
+                                   {% endfor %} 
+                                    </tbody>
+                                  </table>
+                                     </div>
+                                 </div>
+                                 <div class="col-xl-6">
+                                     <div class="card mb-4">
+                                         <div class="card-header">
+                                             <i class="fas fa-person"></i>
+                                             Persone
+                                              <a class="btn btn-primary float-end" href="/enterprises_people_dett/" role="button"><i class="fa-solid fa-plus"></i></a>
+                                         </div>
+                                        <table class="table table-hover table-sm " >
+
+                                        <thead>
+                                          <tr>
+
+                                              <th scope="col">  Nome</th>
+                                            <th scope="col"> Org.</th>
+                                             <th scope="col"> Azienda</th>
+                                  
+
+                                             
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                         {% for b in enterprises_peopleV %}
+                                          <tr>
+
+                                            <td>  <a  href="/enterprises_people_dett/?idpeo={{b.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{b.name}} {{b.surname}}</td>
+                                          <td > {{b.org_chart}}  </td>
+                                             <td > {{b.enterprises}}  </td>
+                                       
+
+                                          
+                                            
+                                            
+                                                  
+                                          </tr>
+                                       {% endfor %} 
+                                        </tbody>
+                                      </table>
+                                      
+                                      
+                                      
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             
+                             
+                    
+                        
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-thumbtack"></i>
+                                        Sedi
+                                         <a class="btn btn-primary float-end" href="/enterprises_locations_dett/" role="button"><i class="fa-solid fa-plus"></i></a>
+                                    </div>
+ <table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+
+        <th scope="col">  Name</th>
+      <th scope="col"> Azienda</th>
+
+
+       
+    </tr>
+  </thead>
+  <tbody>
+   {% for a in Enterprises_locationsV %}
+    <tr>
+
+      <td>   <a  href="/enterprises_locations_dett/?idl={{a.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{a.name}}</td>
+    <td > {{a.enterprises}} </td>
+
+
+    
+      
+      
+            
+    </tr>
+ {% endfor %} 
+  </tbody>
+</table>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-sitemap"></i>
+                                        Organigrammi
+                                         <a class="btn btn-primary float-end" href="/orgcharts_dett/" role="button"><i class="fa-solid fa-plus"></i></a>
+                                    </div>
+                                   <table class="table table-hover table-sm " >
+
+                                   <thead>
+                                     <tr>
+
+                                         <th scope="col">  Nome</th>
+                                       <th scope="col"> Azienda</th>
+                                    
+
+                                        
+                                     </tr>
+                                   </thead>
+                                   <tbody>
+                                    {% for a in OrgChartsV %}
+                                     <tr>
+
+                                       <td  > <a  href="/orgcharts_dett/?ido={{a.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{a.name}}</td>
+                                     <td > {{a.enterprises}} </td>
+                               
+
+                                     
+                                       
+                                       
+                                             
+                                     </tr>
+                                  {% endfor %} 
+                                   </tbody>
+                                 </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <div class="card mb-4">
+                                                            <div class="card-header">
+                                                                <i class="fas fa-box"></i>
+                                                                Asset
+                                                                 <a class="btn btn-primary float-end" href="/assets_dett/" role="button"><i class="fa-solid fa-plus"></i></a>
+                                                            </div>
+                                                            <table class="table table-hover table-sm " >
+
+                                                            <thead>
+                                                              <tr>
+
+                                                                  <th scope="col">  Nome</th>
+                                                                <th scope="col"> Azienda</th>
+                                                           <th scope="col"> Tipo</th>
+
+                                                                 
+                                                              </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                             {% for a in AssetsV %}
+                                                              <tr>
+
+                                                                <td> <a  href="/assets_dett/?ida={{a.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{a.name}}</td>
+                                                              <td > {{a.enterprises}} </td>
+                                                       <td > {{a.type}} </td>
+
+                                                              
+                                                                
+                                                                
+                                                                      
+                                                              </tr>
+                                                           {% endfor %} 
+                                                            </tbody>
+                                                          </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="card mb-4">
+                                                            <div class="card-header">
+                                                                <i class="fas fa-city"></i>
+                                                                Persone giuridiche
+                                                                 <a class="btn btn-primary float-end" href="/enterprises_enterprises_dett/" role="button"><i class="fa-solid fa-plus"></i></a>
+                                                            </div>
+                                                           <table class="table table-hover table-sm " >
+
+                                                           <thead>
+                                                             <tr>
+
+                                                                 <th scope="col">  Nome</th>
+                                                               <th scope="col"> Azienda</th>
+                                                        
+
+                                                                
+                                                             </tr>
+                                                           </thead>
+                                                           <tbody>
+                                                            {% for a in Enterprises_enterprisesV %}
+                                                             <tr>
+
+                                                               <td> <a  href="/enterprises_enterprises_dett/?idee={{a.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{a.name}}</td>
+                                                             <td > {{a.enterprises}} </td>
+                                                     
+
+                                                             
+                                                               
+                                                               
+                                                                     
+                                                             </tr>
+                                                          {% endfor %} 
+                                                           </tbody>
+                                                         </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                 
+                                
+                         
+                          
+                          
+                          
+     
+   
+        
+    
+{% endblock content %}

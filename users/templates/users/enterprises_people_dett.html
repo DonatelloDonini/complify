@@ -1,0 +1,203 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+          <h1 >  {{ title }}  </h1>    
+             
+
+  
+    
+
+
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+             <h1 >  {{ F_enterprises_people_dett_crud.name.value  }}  {{  F_enterprises_people_dett_crud.surname.value}}  </h1> 
+      
+
+            
+                  <form method="post" action="/enterprises_people_dett/">
+                    <div class="mb-3">
+    {% csrf_token %}
+
+{{ F_enterprises_people_dett_crud|crispy }}
+                    </div>
+                    <div class="mb-3">
+
+                    </div>
+                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button type="submit" name="azione" value="Save" class="btn btn-primary">Salva</button>
+     <button type="submit" name="azione"  value="Delete" class="btn btn-danger" onclick="return confirm('Sei sicuro di voler cancellare?');">Elimina</button>
+      </form>
+     <button class="btn btn-primary" type="button" onclick="selectmenu('Basetables')">Esci</button>
+      </div>
+               
+            </div>
+        </div>
+    </div>
+    
+    
+    
+  <div class="container mt-5">
+  
+    <div class="card">
+    
+      <div class="card-header">
+          <h3 class="mt-4">Ruoli</h3> 
+      </div>
+    <div class="card-body">
+   
+   
+      {% for org in orgchart_dett %}   
+       
+      {{ org.name }}<br>
+  <form id="curr_ent3" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 w-100" action="/roles_dett/" method="POST">
+            {% csrf_token %}
+           
+            
+            
+             <div class="input-group">
+
+                           <input type="hidden" value={{F_enterprises_people_dett_crud.id.value }} name="enterprises_people" />   
+                                    <select name="roles_type_fk" id="roles_type_fk" class="form-select " >
+                                    
+                                
+                                    
+                                    
+       {% for aa in Roles_typeV %}
+
+        
+
+                     <option value="{{ aa.id }}">{{ aa.name }}</option>
+  
+
+        {% endfor %}   
+                 </select>  
+                 
+                <select name="org_charts_items" id="org_charts_items" class="form-select " >
+{% for a in org.orgchartsitems_set.all %}
+
+ 
+
+              <option value="{{ a.id }}">{{ a.name }}</option>
+
+
+ {% endfor %}   
+          </select>                 
+                   <button class="btn btn-primary float-end" type="submit" name="action" value="Add"   ><i class="fa-solid fa-plus"></i></button>                </div>
+         </form>
+         <p></p>
+    {% endfor %}   
+   
+   <script>
+  function confirmDelete() {
+    return confirm("Sei sicuro di voler cancellare?");
+  }
+</script>
+
+<table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+  <th scope="col">  </th>
+ 
+        <th scope="col">  Ruolo</th>
+        <th scope="col"> Tipo Organigramma</th>
+        <th scope="col"> Casella</th>
+      <th scope="col"> Azienda</th>
+
+
+   
+       
+    </tr>
+  </thead>
+  <tbody>
+   {% for aa in RolesV %}
+    <tr>
+   <td >
+     <form id="curr_ent3" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" action="/roles_dett/" method="POST" onsubmit="return confirmDelete()">
+     <input type="hidden" value={{aa.id}} name="id" />   
+      <input type="hidden" value={{F_enterprises_people_dett_crud.id.value }} name="enterprises_people" />   
+               {% csrf_token %} <button class="btn btn-primary  btn-sm" type="submit" name="action" value="Delete"   > <i class="fa-regular fa-trash-can"></i></button>   
+      </form>          
+               </td>
+  
+       <td> {{aa.roles_type_fk.name}}
+        </td>
+        <td >{{aa.org_charts_items.orgcharts.name}} </td>
+         <td >{{aa.org_charts_items.name}} </td>
+    <td > {{aa.org_charts_items.orgcharts.enterprises.name}} </td>
+
+
+    
+
+      
+            
+    </tr>
+ {% endfor %} 
+  </tbody>
+</table>
+
+
+
+
+    </div>  </div>
+    </div>
+    
+    
+
+<div class="container mt-5">
+ 
+  <div class="card">
+  
+    <div class="card-header">
+        <h3 >Certificazioni</h3>  
+    </div>
+  <div class="card-body">
+{% include "users/included_requirements.html" with current_object_type="EnterprisesPeople" current_object_id=F_enterprises_people_dett_crud.id.value   type_of_todo="requirement"%}
+
+</div>  </div>
+<br>
+ <div class="card">
+ 
+   <div class="card-header">
+       <h3 >Formazione</h3> 
+   </div>
+ <div class="card-body">
+ 
+{% include "users/included_todos.html" with current_object_type="EnterprisesPeople" current_object_id=F_enterprises_people_dett_crud.id.value   type_of_todo="todo"%}
+  </div>
+  
+  
+  
+  
+  
+  </div> 
+  
+  <br>
+  
+   <div class="card">
+   
+     <div class="card-header">
+         <h3 >Scadenze</h3> 
+     </div>
+   <div class="card-body">
+   
+  {% include "users/included_todos.html" with current_object_type="EnterprisesPeople" current_object_id=F_enterprises_people_dett_crud.id.value   type_of_todo="edu"%}
+    </div>
+    
+    
+    
+    
+    
+    </div> 
+  
+   </div>
+  
+  
+ 
+ {% endblock content %}

@@ -1,0 +1,80 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  
+                            <h1 > {{ title }} </h1>    
+                               
+                               
+     
+        <div class="container mt-5">                           
+                               
+                               
+                               
+                               
+           <div id="app" class="d-flex mvh-100 flex-wrap">
+    <div class="w-50 bg-info">    <h3 > Strenghts  <a class="btn btn-primary" href="/enterprises_dett/" data-bs-target="#enterprises"><i class="fa-solid fa-plus"></i></a></h3>   </div>
+    <div class="w-50 bg-warning" >    <h3 > Weakness  <a class="btn btn-primary" href="/enterprises_dett/" data-bs-target="#enterprises"><i class="fa-solid fa-plus"></i></a></h3>   </div>
+    <div class="w-50 bg-success" >    <h3 >  Opportunities <a class="btn btn-primary" href="/enterprises_dett/" data-bs-target="#enterprises"><i class="fa-solid fa-plus"></i></a></h3>
+    
+         {% for b in ActionsV %}
+        
+             {% if b.type_of_actions.name == "Opportunità" %}
+                <a href="/actions_dett/?idac={{b.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{b.name}} ({{b.org_chart}})<br>
+             {% endif  %}
+        {% endfor %}    
+    
+    
+    
+        </div>
+    <div class="w-50 bg-danger" >    <h3 > Treaths <a class="btn btn-primary" href="/enterprises_dett/" data-bs-target="#enterprises"><i class="fa-solid fa-plus"></i></a></h3>
+    
+     {% for b in ActionsV %}
+         {% if b.type_of_actions.name == "Rischi" %}
+            <a href="/actions_dett/?idac={{b.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{b.name}} ({{b.org_chart}}) <br>
+         {% endif  %}
+    {% endfor %}    
+    
+        </div>
+</div>                    
+      </div>                             
+      <h3 class="mt-4">Azioni di miglioramento</h3>                           
+                               
+    <table class="table table-hover table-sm " >
+
+    <thead>
+      <tr>
+
+          <th scope="col">  Name</th>
+        <th scope="col"> Reparto</th>
+
+
+      
+         
+      </tr>
+    </thead>
+    <tbody>
+     {% for c in ActionsV %}
+      {% if c.type_of_actions.name == "Azioni migliorative" %}
+      <tr>
+
+   
+
+        <td><a  href="/actions_dett/?idac={{c.id}} "><i class="fa-regular fa-pen-to-square " ></i></a> {{c.name}}  </td>
+      <td > {{c.org_chart}} </td>
+
+
+   
+        
+              
+      </tr>
+       {% endif  %}
+   {% endfor %} 
+    </tbody>
+  </table>  
+      
+      
+      
+      
+{% endblock content %}

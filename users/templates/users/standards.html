@@ -1,0 +1,225 @@
+{% extends 'users/base.html' %} {% load static %} {% block content %}
+
+<h1 class="mt-4">
+  <a href="/enterprisestandards_dett/?idstd={{ current_standard.id }} "
+    ><i class="fa-regular fa-pen-to-square"></i
+  ></a>
+  {{ current_standard.name }}
+</h1>
+
+<div class="btn-group mr-2" role="group" aria-label="First group">
+  {% for todo in current_standard.todos_set.all %} {% if todo.type ==
+  "requirement" %} {% if todo.state_requirement == "OPEN" %}
+
+  <a
+    href="/todos_dett/?idt={{todo.id}}&tod=requirement"
+    class="btn btn-sm btn-danger"
+    data-toggle="tooltip"
+    title="{{todo.name}}"
+    ><i class="fas fa-stamp"></i
+  ></a>
+  {% else %}
+
+  <a
+    href="/todos_dett/?idt={{todo.id}}&tod=requirement"
+    class="btn btn-sm btn-success"
+    data-toggle="tooltip"
+    title="{{todo.name}}"
+    ><i class="fas fa-stamp"></i
+  ></a>
+  {% endif %} {% endif %} {% endfor %}
+</div>
+
+<div class="btn-group mr-2" role="group" aria-label="First group">
+  {% for todo in current_standard.todos_set.all %} {% if todo.type == "todo" %}
+  <button type="button" class="btn btn-sm btn-danger">
+    <i class="fas fa-clock"></i>
+  </button>
+
+  {% endif %} {% endfor %}
+</div>
+
+<p></p>
+
+<div class="row">
+  {% for box in headbar %}
+  <div class="col-xl-3 col-md-6">
+    <div class="card {{box.2}} text-white mb-4">
+      <div class="card-body text-center"><h5 class="mb-0">{{box.0}}</h5></div>
+      <div class="card-footer d-flex align-items-center justify-content-center">
+        <h5 class="mb-0">{{box.1}}</h5>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+
+<div class="card card-body filter-bar">
+  <form method="get">
+    <div class="row">
+      {% for field in filterS.form %}
+      <div class="col">
+        <label for="id_title__icontains">{{ field.label }}</label><br />
+
+        {{ field }}
+      </div>
+
+      {% endfor %}
+
+      <input
+        type="hidden"
+        value="{{"
+        current_standard.id
+        }}
+        name="current_standardid"
+      />
+
+      <div class="col-sm-1 form-group is-valid" style="padding-left: ">
+        <button
+          class="btn btn-warning btn-md search_btn search_btn filter-btn"
+          type="submit"
+        >
+          Filtra
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<br /><br />
+
+<div class="table-responsive">
+  <table class="table table-hover table-sm">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center align-middle"></th>
+        <th scope="col" class="text-center align-middle"></th>
+
+        {% for b in TypeOfActions %}
+        <th scope="col" class="text-center align-middle">{{b.name}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in current_ItemsStandards %}
+      <tr>
+        <th scope="row">
+          <a href="/enterprisesstandardsitems_dett/?idstdd={{item.id}} "
+            ><i class="fa-regular fa-pen-to-square"></i
+          ></a>
+          {{item.name}}<br />
+          <p style="font-size: 12px" ;>
+            {% if item.group1 is not None %} {{item.group1}} {% endif %} {% if
+            item.group2 is not None %} - {{item.group2}} {% endif %} {% if
+            item.group3 is not None %} - {{item.group3}} {% endif %} {% if
+            item.group4 is not None %} - {{item.group4}} {% endif %}
+          </p>
+
+          <div>
+            {% for todo in item.todos_set.all %} {% if todo.type ==
+            "requirement" %} {% if todo.state_requirement == "OPEN" %}
+
+            <a
+              href="/todos_dett/?idt={{todo.id}}&tod=requirement"
+              class="btn btn-sm btn-danger"
+              data-toggle="tooltip"
+              title="{{todo.name}}"
+              ><i class="fas fa-stamp"></i
+            ></a>
+
+            {% else %}
+            <a
+              href="/todos_dett/?idt={{todo.id}}&tod=requirement"
+              class="btn btn-sm btn-success"
+              data-toggle="tooltip"
+              title="{{todo.name}}"
+              ><i class="fas fa-stamp"></i
+            ></a>
+            {% endif %} {% endif %} {% if forloop.counter|divisibleby:10 %}
+          </div>
+          <div class="clearfix"></div>
+          {% endif %} {% endfor %}
+
+          <div>
+            {% for todo in item.todos_set.all %} {% if todo.type == "todo" %}
+            <a
+              href="/todos_dett/?idt={{todo.id}}&tod=todo"
+              class="btn btn-sm btn-danger"
+              data-toggle="tooltip"
+              title="{{todo.name}}"
+              ><i class="fas fa-stamp"></i
+            ></a>
+            {% endif %} {% if forloop.counter|divisibleby:10 %}
+          </div>
+          <div class="clearfix"></div>
+          {% endif %} {% endfor %}
+        </th>
+        <td>
+          <div class="dropdown">
+            <button
+              class="btn btn-primary btn-sm dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              +
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              {% for enterprise_itemstandard in
+              item.enterprisesstandardsitems_set.all %} {% for
+              enterprise_itemstandard_t_o_a in
+              enterprise_itemstandard.tofaenterprisesitemsstandards_set.all|dictsort:"type_of_actions.id"
+              %} {% ifchanged enterprise_itemstandard_t_o_a.type_of_actions.name
+              %}
+
+              <li>
+                <a
+                  href="/actions_dett/?idcat={{enterprise_itemstandard_t_o_a.type_of_actions.id}}"
+                  class="dropdown-item"
+                  target="_blank"
+                >
+                  {{enterprise_itemstandard_t_o_a.type_of_actions.name}}</a
+                >
+              </li>
+
+              {% endifchanged %} {% endfor %} {% endfor %}
+            </ul>
+          </div>
+        </td>
+        {% for b in TypeOfActions %}
+
+        <td class="text-center align-middle">
+          {% for action in item.actionsitemsstandards_set.all %} {% if
+          action.actions.type_of_actions.name == b.name %}
+          <a target="_blank" href="/actions_dett/?idac={{action.actions.id}}"
+            >{{action.actions.name}}</a
+          >
+          <br />
+
+          {% endif %} {% endfor %} {% with
+          another_table_count=item.enterprisesstandardsitems_set.count %} {% if
+          another_table_count == 0 %} {% else %} {% for zzz in
+          item.enterprisesstandardsitems_set.all %} {% with
+          another_table_count=zzz.tofaenterprisesitemsstandards_set.count %} {%
+          if another_table_count == 0 %} {% else %} {% for toaabil in
+          zzz.tofaenterprisesitemsstandards_set.all %} {% if
+          toaabil.type_of_actions.name == b.name %}
+
+          <i
+            class="fas fa-circle-info text-success"
+            data-toggle="tooltip"
+            data-placement="top"
+            title=" {{ toaabil.name }}"
+          ></i>
+
+          {% else %} {% endif %} {% endfor %} {% endif %} {% endwith %} {%
+          endfor %} {% endif %} {% endwith %}
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}

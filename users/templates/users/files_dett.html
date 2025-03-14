@@ -1,0 +1,46 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+          <h1 >  {{ title }}  </h1>    
+             
+
+  
+    
+
+
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+             <h1 >  {{ F_files_dett_crud.filename.value  }}   </h1> 
+      
+
+            
+                  <form method="post" action="/files/" enctype="multipart/form-data">
+                    <div class="mb-3">
+    {% csrf_token %}
+{{ F_files_dett_crud|crispy }}
+                    </div>
+                    <div class="mb-3">
+
+                    </div>
+                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button type="submit" name="azione" value="Save" class="btn btn-primary">Salva</button>
+     <button type="submit" name="azione"  value="Delete" class="btn btn-danger" onclick="return confirm('Sei sicuro di voler cancellare?');">Elimina</button>
+      </form>
+     <button class="btn btn-primary" type="button" onclick="selectmenu('Basetables')">Esci</button>
+      </div>
+               
+            </div>
+        </div>
+    </div>
+
+<a href="/download/?idf={{ F_files_dett_crud.id.value }}" download>Scarica File</a>
+
+ 
+ 
+ {% endblock content %}

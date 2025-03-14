@@ -1,0 +1,155 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+                       
+                        
+                            
+                 
+ <h1 >  {{ title }}  </h1>    <br>
+                        
+                        
+                        
+                        <div class="row">
+                            {% for box in headbar %}
+                               <div class="col-xl-3 col-md-6">
+                                   <div class="card {{box.2}} text-white mb-4">
+                                       <div class="card-body  text-center"> <h5 class="mb-0">{{box.0}}</h5></div>
+                                       <div class="card-footer d-flex align-items-center justify-content-center">
+                                      <h5 class="mb-0 "> {{box.1}}</h5>
+                                       </div>
+                                   </div>
+                               </div>
+                               
+                            {% endfor %}
+                        </div>
+                        
+                       
+                       
+                <br>       
+                       
+
+             
+     
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+       
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item me-3">
+                    <button type="button" class="btn btn-primary btn-sm">Nuovo Audit</button>
+                </li>
+                <li class="nav-item me-3">
+                    <button type="button" class="btn btn-primary btn-sm">Nuova NC</button>
+                </li>
+                <li class="nav-item me-3">
+                    <button type="button" class="btn btn-primary btn-sm">Nuova Richiesta</button>
+                </li>
+                <li class="nav-item me-3">
+                    <button type="button" class="btn btn-primary btn-sm">Nuova Scadenza</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+   
+   
+   
+         <br><br>
+           <div class="row">
+               <div class="col-xl-6">
+                   <div class="card mb-4">
+                       <div class="card-header">
+                          
+                           Le mie richieste
+                            
+                       </div>
+                  <table class="table table-hover table-sm " >
+
+                  <thead>
+                    <tr>
+ <th scope="col">  </th>
+                        <th scope="col">  Name</th>
+                      <th scope="col"> Stato </th>
+           <th scope="col">  Data e ora</th>
+
+                       
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for a in RequestsV %}
+                    <tr>
+
+                      <td  > <a  href="/requests_dett/?action=Edit&id={{a.id}} "><i class="fa-regular fa-pen-to-square " ></i></a></td>
+                     <td  >   {{a.name}}</td>
+                    <td >  {{a.state}} </td>
+           <td >  {{a.date_time_open}} </td>
+
+                    
+                      
+                      
+                            
+                    </tr>
+                 {% endfor %} 
+                  </tbody>
+                </table>
+                   </div>
+               </div>
+               
+               <div class="col-xl-6">
+                   <div class="card mb-4">
+                       <div class="card-header">
+                        
+                           Le mie attività
+                          
+                       </div>
+                      <table class="table table-hover table-sm " >
+
+                      <thead>
+                        <tr>
+ <th scope="col">  </th>
+                            <th scope="col">  Nome</th>
+                          <th scope="col"> Stato</th>
+                           <th scope="col"> Data e ora</th>
+                
+
+                           
+                        </tr>
+                      </thead>
+                      <tbody>
+                       {% for b in TodosV %}
+                        <tr>
+
+                          <td>  <a  href="/todos_dett/?idt={{b.id}}"><i class="fa-regular fa-pen-to-square " ></i></a></td>
+                        <td > {{b.name}}  </td>
+                           <td > {{b.state}}  </td>
+                       <td > {{b.date_time_open}}  </td>
+
+                        
+                          
+                          
+                                
+                        </tr>
+                     {% endfor %} 
+                      </tbody>
+                    </table>
+                    
+                    
+                    
+                   </div>
+               </div>
+           </div>                   
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                        
+                                            
+    
+{% endblock content %}

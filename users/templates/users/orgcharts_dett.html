@@ -1,0 +1,128 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+          <h1 >  {{ title }}  </h1>    
+             
+
+  
+    
+
+
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+             <h1 >  {{ F_orgcharts_dett_crud.name.value  }}    </h1> 
+      
+
+            
+                  <form method="post" action="/orgcharts_dett/">
+                    <div class="mb-3">
+    {% csrf_token %}
+
+{{ F_orgcharts_dett_crud|crispy }}
+                    </div>
+                    <div class="mb-3">
+
+                    </div>
+                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button type="submit" name="azione" value="Save" class="btn btn-primary">Salva</button>
+     <button type="submit" name="azione"  value="Delete" class="btn btn-danger" onclick="return confirm('Sei sicuro di voler cancellare?');">Elimina</button>
+      </form>
+     <button class="btn btn-primary" type="button" onclick="selectmenu('Basetables')">Esci</button>
+      </div>
+               
+            </div>
+        </div>
+    </div>
+
+<hr>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {packages:["orgchart"]});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');
+
+        // For each orgchart box, provide the name, manager, and tooltip to show.
+        data.addRows([
+
+        {% for aa in OrgChartsItems_dett %}
+         
+           [{'v':'{{aa.id}}', 'f':'{{aa.name}} {{aa.owner}} '}, '{{aa.orgcharts_items_fk.id}}', '{{aa.name}}'],  
+      {% endfor %}    
+          
+        ]);
+
+        // Create the chart.
+        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+        // Draw the chart, setting the allowHtml option to true for the tooltips.
+        chart.draw(data, {'allowHtml':false});
+      }
+   </script>
+
+ 
+    <div id="chart_div"></div>
+
+
+
+ <div class="container mt-5">
+   <script>
+  function confirmDelete() {
+    return confirm("Sei sicuro di voler cancellare?");
+  }
+</script>
+
+
+
+<a class="btn btn-primary float-end" role="button" href="/orgchartsitems_dett/?action=New&id={{ F_orgcharts_dett_crud.id.value  }} ">Aggiungi</a>
+
+
+<table class="table table-hover table-sm " >
+
+  <thead>
+    <tr>
+  <th scope="col">  </th>
+ 
+        <th scope="col">  Nome</th>
+        <th scope="col"> Riporta a</th>
+        <th scope="col"> Owner</th>
+     
+
+
+   
+       
+    </tr>
+  </thead>
+  <tbody>
+   {% for aa in OrgChartsItems_dett %}
+    <tr>
+   <td >
+    
+
+               {% csrf_token %} <a   href="/orgchartsitems_dett/?action=Edit&id={{ aa.id }} "  > <i class="fa-regular fa-pen-to-square "></i></a>   
+         
+               </td>
+  
+       <td> {{aa.name}}
+        </td>
+        <td >{{aa.orgcharts_items_fk.name}} </td>
+         <td >{{aa.owner}} </td>
+
+
+      
+            
+    </tr>
+ {% endfor %} 
+  </tbody>
+</table>
+ </div>
+ {% endblock content %}
